@@ -27,14 +27,14 @@
           <div>
           <h1>NYTE</h1>
 
-<span>Search month:</span>
-<input type="text" id="month" />
+          <span>Search month:</span>
+          <input type="text" id="month" />
 
-<span>Search year:</span>
-<input type="text" id="year" />
+          <span>Search year:</span>
+          <input type="text" id="year" />
 
-<input type="button" id="find" value="Find" onClick={this.props.fetchArticles}/>
-</div>
+          <input type="button" id="find" value="Find" onClick={this.props.fetchArticles}/>
+          </div>
 
         )
       }
@@ -64,20 +64,23 @@
               url: url,
               method: 'GET',
             }).done(
-              (result)=> {
-              this.setState({
-                articles: result.response.docs
-              });
-            console.log(this.state);}
+              (result) => {
+                let items = [];
+                for (var i = 0; i < 20; i++) {
+                  const item = result.response.docs[i];
+                  items.push(item.web_url);
+                }
+                this.setState({articles: items});
+                console.log(this.state)}
             ).fail(function(err) {
               throw err;
             });
-          }
+
     }
 
 
     const root = document.getElementById('root');
-    ReactDOM.render(<Result/>, root);
+    ReactDOM.render(<Result />, root);
 
     </script>
 </body>
