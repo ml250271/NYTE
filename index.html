@@ -20,25 +20,41 @@
 
   <script type="text/babel">
 
+
+
     class Input extends React.Component{
+
+      constructor(props){
+            super(props);
+            this.state = {month:[],
+                          year: []}
+
+
+      }
+
+      searchByMY() {
+        const {year, month} = this.state;
+        this.props.fetchArticles(year, month);
+      }
 
       render(){
         return(
           <div>
-          <h1>NYTE</h1>
+            <h1>NYTE</h1>
 
-          <span>Search month:</span>
-          <input type="text" id="month" />
+            <span>Search month:</span>
+            <input type="text" id="month" />
 
-          <span>Search year:</span>
-          <input type="text" id="year" />
+            <span>Search year:</span>
+            <input type="text" id="year" />
 
-          <input type="button" id="find" value="Find" onClick={this.props.fetchArticles}/>
-          </div>
+            <input type="button" id="find" value="Find" onClick={this.searchByMY}/>
 
-        )
-      }
-    }
+      //   return(
+      //     let dateYear = getElementById("month").value + "/" + getElementById("year").value;
+      //     console.log(dateYear);
+      //   );
+      // }
 
     class Result extends React.Component{
 
@@ -50,12 +66,24 @@
 
           render(){
             return (
-              <Input fetchArticles={this.fetchArticles}/>
+              <div>
+                <Input fetchArticles={this.fetchArticles}/>
+                <div>
+                  {
+                    this.state.articles.map((url, index) =>
+                      <p key={index}>
+                        <a href={url}>{url}</a>
+                      </p>
+                    )
+                  }
+                </div>
+              </div>
             )
           }
 
 
-          fetchArticles(){
+          fetchArticles(year, month){
+
             var url = "https://api.nytimes.com/svc/archive/v1/2016/1.json";
             url += '?' + $.param({
               'api-key': "32e84cd913b6451bb47730dea03e2515"
@@ -64,23 +92,25 @@
               url: url,
               method: 'GET',
             }).done(
-              (result) => {
+              (result)=> {
                 let items = [];
-                for (var i = 0; i < 20; i++) {
+                for(var i = 0; i < 20; i++){
                   const item = result.response.docs[i];
                   items.push(item.web_url);
                 }
-                this.setState({articles: items});
-                console.log(this.state)}
+              this.setState({
+                articles: items
+              });
+            console.log(this.state);}
             ).fail(function(err) {
               throw err;
             });
-
+          }
     }
 
 
     const root = document.getElementById('root');
-    ReactDOM.render(<Result />, root);
+    ReactDOM.render(<Result/>, root);
 
     </script>
 </body>
