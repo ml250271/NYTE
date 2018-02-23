@@ -28,6 +28,9 @@
             super(props);
             this.state = {month:[],
                           year: []}
+          
+          this.setMonth = this.setMonth.bind(this);
+          this.setYear = this.setYear.bind(this);
 
 
       }
@@ -36,6 +39,14 @@
         const {year, month} = this.state;
         this.props.fetchArticles(year, month);
       }
+        
+        setMonth(e){
+            this.setState({month: e.target.value})
+        }
+        
+        setYear(e){
+            this.setState({year: e.target.value})
+        }
 
       render(){
         return(
@@ -43,18 +54,15 @@
             <h1>NYTE</h1>
 
             <span>Search month:</span>
-            <input type="text" id="month" />
+            <input type="text" id="month" onChange={e => this.setMonth(e)}/>
 
             <span>Search year:</span>
-            <input type="text" id="year" />
+            <input type="text" id="year" onChange={e => this.setYear(e)}/>
 
-            <input type="button" id="find" value="Find" onClick={this.searchByMY}/>
+            <input type="button" id="find" value="Find" onClick={this.searchByMY.bind(this)}/>
+      </div>
 
-      //   return(
-      //     let dateYear = getElementById("month").value + "/" + getElementById("year").value;
-      //     console.log(dateYear);
-      //   );
-      // }
+    )}}
 
     class Result extends React.Component{
 
@@ -64,27 +72,10 @@
             this.fetchArticles = this.fetchArticles.bind(this);
           }
 
-          render(){
-            return (
-              <div>
-                <Input fetchArticles={this.fetchArticles}/>
-                <div>
-                  {
-                    this.state.articles.map((url, index) =>
-                      <p key={index}>
-                        <a href={url}>{url}</a>
-                      </p>
-                    )
-                  }
-                </div>
-              </div>
-            )
-          }
-
-
+          
           fetchArticles(year, month){
 
-            var url = "https://api.nytimes.com/svc/archive/v1/2016/1.json";
+            var url = `https://api.nytimes.com/svc/archive/v1/2016/1.json`;
             url += '?' + $.param({
               'api-key': "32e84cd913b6451bb47730dea03e2515"
             });
@@ -105,6 +96,24 @@
             ).fail(function(err) {
               throw err;
             });
+          }
+                    
+                    
+            render(){
+            return (
+              <div>
+                <Input fetchArticles={this.fetchArticles}/>
+                <div>
+                  {
+                    this.state.articles.map((url, index) =>
+                      <p key={index}>
+                        <a href={url}>{url}</a>
+                      </p>
+                    )
+                  }
+                </div>
+              </div>
+            )
           }
     }
 
