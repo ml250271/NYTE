@@ -71,12 +71,14 @@
       constructor(props){
         super(props);
         this.setResult = this.setResult.bind(this);
+        this.showDetail = this.showDetail.bind(this);
 
         this.state = {
           description: "",
           image: "",
           title: "",
-          url: ""
+          url: "",
+          clickedArt: "" // drzace kliknuti clanak
         }
       }
 
@@ -92,7 +94,8 @@
 
       componentDidMount(){
         $.ajax({
-              url: `http://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${this.props.url}`,
+                url: `http://api.linkpreview.net/?key=123456&q=https://www.google.com`,
+              //url: `http://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${this.props.url}`,
               method: 'GET',
             }).done((result)=> {
                 this.setResult(result);
@@ -102,12 +105,19 @@
             });
       }
 
+      showDetail(e){
+            let details = e.target;
+            console.log('dal radi');
+            return <ShowDetail data={details}/>
+
+          }
+
       render(){
         return(
-          <div>
+          <div onClick={ e => this.showDetail(e)}>
           <p>{this.state.title}</p>
           <p><img src={this.state.image} width="100"/></p>
-          <p>{this.state.description}</p>
+          <p id="description">{this.state.description}</p>
           <p>{this.state.url}</p>
         {/*} <p>
         //     <a href={this.props.url}>{this.props.url}</a>
@@ -119,20 +129,18 @@
       }
     }
 
-    class Detail extends React.Component{
-          render(){
-            return(
-              <div>
-                Details:
-              </div>
-            )
+    class ShowDetail extends React.Component{
 
-          }
+      render(){
+        console.log("show");
 
-
-
-
+        return(
+          <div>oks</div>
+        )
+      }
     }
+
+
 
     class Result extends React.Component{
 
@@ -156,7 +164,7 @@
             }).done(
               (result)=> {
                 let items = [];
-                for(var i = 0; i < 20; i++){
+                for(var i = 0; i < 2; i++){
                   const item = result.response.docs[i];
                   items.push(item.web_url);
                 }
@@ -180,6 +188,7 @@
                       <ShowResult key={index} url={url}/>
                     )
                   }
+                  <div></div>
                 </div>
               </div>
             )
