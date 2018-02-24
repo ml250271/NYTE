@@ -26,43 +26,113 @@
 
       constructor(props){
             super(props);
-            this.state = {month:[],
-                          year: []}
+            this.state = {date:[]}
 
           this.setMonth = this.setMonth.bind(this);
-          this.setYear = this.setYear.bind(this);
+          // this.setYear = this.setYear.bind(this);
 
 
       }
 
       searchByMY() {
-        const {year, month} = this.state;
-        this.props.fetchArticles(year, month);
+        const date = this.state.date;
+        this.props.fetchArticles(date);
       }
 
         setMonth(e){
-            this.setState({month: e.target.value})
+            let date = e.target.value.split("-");
+            date = date.map( date => Math.abs(date) ).join("/");
+            console.log(date);
+            this.setState({date: date})
         }
 
-        setYear(e){
-            this.setState({year: e.target.value})
-        }
+        // setYear(e){
+        //     this.setState({year: e.target.value})
+        // }
 
       render(){
         return(
           <div>
             <h1>NYTE</h1>
 
-            <span>Search month:</span>
-            <input type="text" id="month" onChange={e => this.setMonth(e)}/>
+            <label>Search month:</label>
+            <input type="month" id="month" onChange={e => this.setMonth(e)}/>
 
-            <span>Search year:</span>
-            <input type="text" id="year" onChange={e => this.setYear(e)}/>
+            {/*<span>Search year:</span>*/}
+            {/* <input type="year" id="year" onChange={e => this.setYear(e)}> */}
 
             <input type="button" id="find" value="Find" onClick={this.searchByMY.bind(this)}/>
       </div>
 
     )}}
+
+    class ShowResult extends React.Component{
+
+      constructor(props){
+        super(props);
+        this.setResult = this.setResult.bind(this);
+
+        this.state = {
+          description: "",
+          image: "",
+          title: "",
+          url: ""
+        }
+      }
+
+      setResult(result){
+
+        this.setState({
+          description: result.description,
+          image: result.image,
+          title: result.title,
+          url: result.url
+        })
+      }
+
+      componentDidMount(){
+        $.ajax({
+              url: `http://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${this.props.url}`,
+              method: 'GET',
+            }).done((result)=> {
+                this.setResult(result);
+
+            }).fail(function(err) {
+              throw err;
+            });
+      }
+
+      render(){
+        return(
+          <div>
+          <p>{this.state.title}</p>
+          <p><img src={this.state.image} width="100"/></p>
+          <p>{this.state.description}</p>
+          <p>{this.state.url}</p>
+        {/*} <p>
+        //     <a href={this.props.url}>{this.props.url}</a>
+        // </p>*/}
+          </div>
+        )
+
+
+      }
+    }
+
+    class Detail extends React.Component{
+          render(){
+            return(
+              <div>
+                Details:
+              </div>
+            )
+
+          }
+
+
+
+
+    }
 
     class Result extends React.Component{
 
@@ -73,12 +143,13 @@
           }
 
 
-          fetchArticles(year, month){
+          fetchArticles(date){
 
-            var url = `https://api.nytimes.com/svc/archive/v1/${year}/${month}.json`;
+            var url = `https://api.nytimes.com/svc/archive/v1/${date}.json`;
             url += '?' + $.param({
               'api-key': "32e84cd913b6451bb47730dea03e2515"
             });
+            console.log(url);
             $.ajax({
               url: url,
               method: 'GET',
@@ -106,9 +177,7 @@
                 <div>
                   {
                     this.state.articles.map((url, index) =>
-                      <p key={index}>
-                        <a href={url}>{url}</a>
-                      </p>
+                      <ShowResult key={index} url={url}/>
                     )
                   }
                 </div>
