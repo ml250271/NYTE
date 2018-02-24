@@ -28,7 +28,7 @@
             super(props);
             this.state = {month:[],
                           year: []}
-          
+
           this.setMonth = this.setMonth.bind(this);
           this.setYear = this.setYear.bind(this);
 
@@ -39,11 +39,11 @@
         const {year, month} = this.state;
         this.props.fetchArticles(year, month);
       }
-        
+
         setMonth(e){
             this.setState({month: e.target.value})
         }
-        
+
         setYear(e){
             this.setState({year: e.target.value})
         }
@@ -72,10 +72,10 @@
             this.fetchArticles = this.fetchArticles.bind(this);
           }
 
-          
+
           fetchArticles(year, month){
 
-            var url = `https://api.nytimes.com/svc/archive/v1/2016/1.json`;
+            var url = `https://api.nytimes.com/svc/archive/v1/${year}/${month}.json`;
             url += '?' + $.param({
               'api-key': "32e84cd913b6451bb47730dea03e2515"
             });
@@ -97,8 +97,8 @@
               throw err;
             });
           }
-                    
-                    
+
+
             render(){
             return (
               <div>
