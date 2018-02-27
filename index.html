@@ -72,13 +72,14 @@
         super(props);
         this.setResult = this.setResult.bind(this);
         this.showDetail = this.showDetail.bind(this);
+        this.callLinkPreview = this.callLinkPreview.bind(this);
 
         this.state = {
           description: "",
           image: "",
           title: "",
           url: "",
-          clickedArt: "" // drzace kliknuti clanak
+        clickedArt: "" // drzace kliknuti clanak
         }
       }
 
@@ -92,10 +93,10 @@
         })
       }
 
-      componentDidMount(){
-        $.ajax({
-                url: `http://api.linkpreview.net/?key=123456&q=https://www.google.com`,
-              //url: `http://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${this.props.url}`,
+      callLinkPreview(){
+          $.ajax({
+                //url: `http://api.linkpreview.net/?key=123456&q=https://www.google.com`,
+              url: `http://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${this.props.url}`,
               method: 'GET',
             }).done((result)=> {
                 this.setResult(result);
@@ -103,6 +104,17 @@
             }).fail(function(err) {
               throw err;
             });
+      }    
+        
+      componentDidMount(){
+        this.callLinkPreview();
+      
+      }
+        
+      componentDidUpdate(prevProps, preState){
+          if(prevProps.url !== this.props.url){
+              this.callLinkPreview();
+          }
       }
 
       showDetail(e){
