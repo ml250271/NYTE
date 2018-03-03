@@ -28,7 +28,7 @@ class Input extends React.Component {
             <div className="input">
                 <a href="http://developer.nytimes.com">
                     <img
-                        src="http://static01.nytimes.com/packages/images/developer/logos/poweredby_nytimes_30b.png"
+                        src="https://static01.nytimes.com/packages/images/developer/logos/poweredby_nytimes_30b.png"
                         id="ny-api-logo"
                     />
                 </a>
@@ -87,7 +87,7 @@ class ShowResult extends React.Component {
     callLinkPreview() {
         $.ajax({
             //url: `http://api.linkpreview.net/?key=123456&q=https://www.google.com`,
-            url: `http://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${
+            url: `https://api.linkpreview.net/?key=5a9168704988539b8faaf928ad46f59df7c4ca9ae0dce&q=${
                 this.props.url
             }`,
             method: "GET"
