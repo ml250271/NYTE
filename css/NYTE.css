@@ -1,1 +1,132 @@
+body {
+    margin: 0;
+    position: relative;
+    font-family: "Archivo Narrow", sans-serif;
+    padding-bottom: 5rem;
+}
 
+h2 {
+    margin: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Libre Baskerville", serif;
+    font-style: italic;
+    color: #202020;
+}
+
+#h1img {
+    background-color: black;
+    height: 6rem;
+    margin: 0;
+}
+
+#imglogo {
+    width: 340px;
+    margin: auto;
+    display: block;
+    padding-top: 1rem;
+}
+
+#month {
+    margin: 0.7rem;
+    font-family: "Archivo Narrow", sans-serif;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    border: 0;
+    padding-left: 10px;
+}
+
+#find {
+    font-family: "Archivo Narrow", sans-serif;
+    font-size: 1.35rem;
+    padding: 0 0.9rem 0 0.9rem;
+    border: 0;
+    border-radius: 20px;
+    background-color: #202020;
+    color: white;
+}
+
+#find:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#ny-api-logo {
+    float: left;
+}
+
+label {
+    font-size: 1.3rem;
+}
+
+.input {
+    margin: 30 px;
+    text-align: center;
+    background-color: #d8d8d8;
+    padding: 2rem;
+    height: 8rem;
+    border-bottom: 1px solid #979797;
+}
+#search-box {
+    margin-top: 2rem;
+}
+
+.showResult {
+    display: flex;
+    /* flex-flow: row wrap; */
+    flex-wrap: wrap;
+    /* padding: 10px; */
+    margin: auto;
+}
+
+.article {
+    padding: 0 15px 0 15px;
+    flex-basis: calc(25% - 34px);
+    border-right: 1px solid #979797;
+    margin-top: 40px;
+}
+
+.article:nth-child(4n) {
+    border: none;
+}
+
+.title {
+    margin: 0.2rem;
+}
+
+.description {
+    margin: 0.2rem;
+}
+
+.img {
+    display: block;
+    margin: auto;
+    height: auto;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .article {
+        padding: 0 10px 0 10px;
+        flex-basis: calc(50% - 23px);
+    }
+
+    .article:nth-child(4n) {
+        border-right: 1px solid #979797;
+    }
+
+    .article:nth-child(2n) {
+        border-right: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .article {
+        flex-basis: calc(100%);
+        margin: 10px;
+        border: none;
+    }
+}
