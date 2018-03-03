@@ -158,7 +158,7 @@ class Result extends React.Component {
         })
             .done(result => {
                 let items = [];
-                for (var i = 0; i < 4; i++) {
+                for (var i = 0; i < 20; i++) {
                     const item = result.response.docs[i];
                     items.push(item.web_url);
                 }
