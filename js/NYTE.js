@@ -121,7 +121,7 @@ class ShowResult extends React.Component {
                 <img className="img" src={placeholder} />
                 <h3 className="title">{this.state.title}</h3>
                 <p className="description">{this.state.description}</p>
-                <a className="link" href={this.state.url}>
+                <a className="link" href={this.state.url} target="_blank">
                     Read more...
                 </a>
             </div>
